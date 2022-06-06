@@ -8,7 +8,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "formatdb": "node mongo.js",
-    "restart": "killall node | npm run dev"
+    "restart": "killall node | npm run dev",
+    "eslint": "cd ./frontend && npm run eslint"
   },
   "author": "e2f5db0",
   "license": "ISC",
