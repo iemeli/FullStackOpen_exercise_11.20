@@ -20,3 +20,11 @@ jobs:
         run: npm install && cd ./frontend && npm install
       - name: lint
         run: npm run eslint
+      - name: build
+        run: npm run build
+      - name: Build fail notification
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ !success() }}
+        with:
+          details: Build did not succeed.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
