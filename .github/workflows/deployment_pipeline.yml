@@ -50,12 +50,12 @@ jobs:
           details: A new version deployed, hooray!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: New version deploy notification
-      uses: rjstone/discord-webhook-notify@v1
-      if: |
-        success() &&
-        github.event_name == 'push' &&
-        !contains(toJSON(github.event.commits.*.message), '#skip')
-      with:
-        severity: info
-        details: A new version deployed to Heroku!
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: rjstone/discord-webhook-notify@v1
+        if: |
+          success() &&
+          github.event_name == 'push' &&
+          !contains(toJSON(github.event.commits.*.message), '#skip')
+        with:
+          severity: info
+          details: A new version deployed to Heroku!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
