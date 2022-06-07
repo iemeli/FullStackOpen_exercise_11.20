@@ -49,13 +49,14 @@ jobs:
           severity: info
           details: A new version deployed, hooray!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: New version deploy notification
-        uses: rjstone/discord-webhook-notify@v1
-        if: |
-          success() &&
-          github.event_name == 'push' &&
-          !contains(toJSON(github.event.commits.*.message), '#skip')
-        with:
-          severity: info
-          details: A new version deployed to Heroku!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+  tag_release:
+    needs: [deployment_pipeline]
+    runs-on: ubuntu-20.04
+    if: github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip')
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@eca2b69f9e2c24be7decccd0f15fdb1ea5906598
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
